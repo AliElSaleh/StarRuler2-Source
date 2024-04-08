@@ -1,0 +1,13 @@
+Assembly sound64d
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory source
+Includes include ogg OpenALSoft vorbis ../os/include
+
+Defines _CRT_SECURE_NO_WARNINGS
+
+include ../../Config/Debug.buildvariables
