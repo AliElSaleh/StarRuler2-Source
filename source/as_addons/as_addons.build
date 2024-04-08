@@ -1,0 +1,11 @@
+Assembly as_addons64d
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory source
+Includes include ../angelscript/include
+
+include ../../Config/Debug.buildvariables
