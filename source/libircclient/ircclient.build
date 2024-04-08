@@ -1,0 +1,17 @@
+Assembly libircclient64d
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory src
+Includes include
+
+IncludedSourceFiles libircclient.c
+
+Defines _CRT_SECURE_NO_WARNINGS ENABLE_THREADS _WINSOCK_DEPRECATED_NO_WARNINGS
+
+if _platform == windows Defines WIN32 _WIN32
+
+include ../../Config/Debug.buildvariables
