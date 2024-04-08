@@ -1,0 +1,43 @@
+Assembly freetype247_64
+Extension lib
+
+Compiler clang
+
+CompilerFlags -O2
+
+SourceDirectory src
+Includes include
+
+IncludedSourceFiles [
+    autofit.c
+    bdf.c
+    cff.c
+    ftbase.c
+    ftbitmap.c
+    ftcache.c
+    ftdebug.c
+    ftfstype.c
+    ftgasp.c
+    ftglyph.c
+    ftgzip.c
+    ftinit.c
+    ftlzw.c
+    ftstroke.c
+    ftsystem.c
+    smooth.c
+]
+
+if _platform == windows Defines WIN32
+
+Defines [
+    FT2_BUILD_LIBRARY 
+    _DEBUG
+    _LIB
+    _CRT_SECURE_NO_WARNINGS
+    FT_DEBUG_LEVEL_ERROR
+    FT_DEBUG_LEVEL_TRACE
+    FT2_BUILD_LIBRARY
+    _MBCS
+]
+
+Multithread false
