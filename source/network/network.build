@@ -1,0 +1,13 @@
+Assembly network64d
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory source
+Includes include ../os/include
+
+Defines _WINSOCK_DEPRECATED_NO_WARNINGS
+
+include ../../Config/Debug.buildvariables
