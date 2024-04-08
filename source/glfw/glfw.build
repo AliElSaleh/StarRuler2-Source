@@ -1,0 +1,18 @@
+Assembly glfw64
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory src
+Includes . include deps
+
+ExcludedSourceFiles cocoa_*.c egl_*.c glx_*.c
+
+if _platform == windows ExcludedSourceFiles x11_*.c
+if _platform == linux ExcludedSourceFiles win32_*.c
+
+Defines _CRT_SECURE_NO_WARNINGS
+
+include ../../Config/Debug.buildvariables
