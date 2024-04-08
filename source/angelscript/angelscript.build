@@ -1,0 +1,14 @@
+Assembly angelscript64d
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory source
+Includes include
+
+ExcludedSourceDirectories addons
+ExcludedSourceFiles *_arm_msvc.asm *_xenon.cpp *_gcc.cpp *_mingw.cpp *_arm.cpp
+
+include ../../Config/Debug.buildvariables
