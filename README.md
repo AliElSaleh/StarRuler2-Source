@@ -15,6 +15,13 @@ open-source the game as a whole and allow anyone interested in how its engine wo
 to tinker with it.
 
 ## Building the Game
+Just call
+```cmd
+riftbuild
+```
+so much needless complexity...
+
+<strike>
 The Star Ruler 2.exe contained in the main folder is just a launcher. To run
 the game you will need to build the binary for your platform from source.
 
@@ -38,6 +45,7 @@ Afterward, run the `StarRuler2.sh` shell script to start the game.
 Several dependencies are required to build on linux, including libpng, zlib,
 GLEW, GLU, freetype2, libvorbisfile, libvorbis, libogg, libopenal, libbz2,
 libXRandR, and libcurl.
+</strike>
 
 
 ## Differences with Commercial Version
