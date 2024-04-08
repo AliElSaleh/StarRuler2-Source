@@ -1,0 +1,13 @@
+Assembly util64d
+Extension lib
+
+Compiler cl
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags
+
+SourceDirectory source
+Includes include ../libpng
+
+Defines _CRT_SECURE_NO_WARNINGS
+
+include ../../Config/Debug.buildvariables
