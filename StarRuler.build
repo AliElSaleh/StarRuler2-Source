@@ -1,0 +1,85 @@
+include Config/Debug.buildvariables
+
+Assembly StarRuler2
+
+Compiler cl
+
+CompilerFlags $SharedCompilerFlags
+LinkerFlags $SharedLinkerFlags /NODEFAULTLIB:LIBCMT
+
+SourceDirectory source/game
+IntermediateDirectory Int
+
+ExcludedSourceFiles master_server.cpp
+
+TitleName Star Ruler 2
+Description Star Ruler 2 (Open Source)
+Version 1.0.0
+CompanyName Blind Mind Studios
+
+Icon sr2.ico
+
+Includes [
+    source/game 
+    source/include 
+    source/angelscript/include 
+    source/os/include 
+    source/util/include
+    source/network/include
+    source/sound/include
+    source/include/glew
+    source/glfw/include
+    source/libpng
+    source/freetype2/include
+    source/as_addons/include
+    source/rapidjson/include
+    source/libircclient/include
+    source/steam
+]
+
+Libraries [
+    zlibwapi
+    opengl32
+    glew32
+    libpng64
+    glfw64
+    glu32
+    freetype247_64
+    angelscript64d
+    as_addons64d
+    sound64d
+    util64d
+    os64d
+    network64d
+    libcurl
+    libircclient64d
+    %_NativeLibs
+]
+
+LibraryDirectories [
+    source/lib/win64 
+    source/angelscript/Build 
+    source/as_addons/Build
+    source/glfw/Build
+    source/sound/Build
+    source/util/Build
+    source/os/Build
+    source/network/Build
+    source/libircclient/Build
+]
+
+Defines NSTEAM _DEBUG CURL_STATICLIB _MBCS _CRT_SECURE_NO_WARNINGS
+
+if _platform == windows Defines WIN_MODE WIN32
+if _platform == linux   Defines LIN_MODE
+
+Depends angelscript source/angelscript
+Depends as_addons   source/as_addons
+Depends glfw        source/glfw
+Depends sound       source/sound
+Depends util        source/util
+Depends os          source/os
+Depends network     source/network
+Depends ircclient   source/libircclient
+
+#RunAssembly
