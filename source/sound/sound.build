@@ -29,3 +29,4 @@ AssertLibExists os
 if _platform == linux AssertLibExists ogg vorbis vorbisfile openal
 
 if _platform == windows PostBuildCmd copy Build\$(Mode)\$(Assembly).dll ..\..\Build
+if _platform == linux   PostBuildCmd cp Build/$(Mode)/lib$(Assembly).so ../../Build
