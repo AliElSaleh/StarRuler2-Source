@@ -1,4 +1,4 @@
-if cl Compiler cl else Compiler g++
+if _platform == windows Compiler cl else Compiler g++
 
 if compiler == cl {
     SharedCompilerFlags /EHa /MD
