@@ -118,7 +118,7 @@ static int socket_accept (socket_t * sock, socket_t * newsock, struct sockaddr *
 }
 
 
-static int socket_recv (socket_t * sock, void * buf, size_t len)
+static int socket_recv (socket_t * sock, char * buf, size_t len)
 {
 	int length;
 
@@ -134,7 +134,7 @@ static int socket_recv (socket_t * sock, void * buf, size_t len)
 }
 
 
-static int socket_send (socket_t * sock, const void *buf, size_t len)
+static int socket_send (socket_t * sock, const char *buf, size_t len)
 {
 	int length;
 

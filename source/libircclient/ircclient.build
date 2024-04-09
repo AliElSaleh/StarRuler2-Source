@@ -8,11 +8,14 @@ SourceDirectory src
 BuildDirectory Build/$Mode
 
 IncludeFlags include
+Includes include
 
 IncludedSourceFiles libircclient.c
 
 Defines _CRT_SECURE_NO_WARNINGS ENABLE_THREADS
 
+if _platform == windows Defines WIN_MODE _WINSOCK_DEPRECATED_NO_WARNINGS
+if _platform == linux   Defines LIN_MODE
+
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars
-

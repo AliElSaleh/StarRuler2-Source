@@ -12,12 +12,13 @@ IntermediateDirectory Int
 
 ExcludedSourceFiles master_server.cpp
 
-TitleName Star Ruler 2
-Description Star Ruler 2 (Open Source)
-Version 1.0.0
-CompanyName Blind Mind Studios
-
-Icon sr2.ico
+if compiler != g++ {
+    TitleName Star Ruler 2
+    Description Star Ruler 2 (Open Source)
+    Version 1.0.0
+    CompanyName Blind Mind Studios
+    Icon sr2.ico
+}
 
 IncludeFlags [
     source/game 
@@ -36,12 +37,14 @@ IncludeFlags [
     source/libircclient/include
     source/steam
 ]
+Includes $IncludeFlags
 
-Libraries %_NativeLibs angelscript as_addons sound util os network curl freetype ircclient glfw pngS
+Libraries %_NativeLibs angelscript as_addons sound util os network curl freetype ircclient glfw png
 
 if _platform == windows Libraries opengl32 glu32 glew32 zlibwapi
 if _platform == linux   Libraries GL GLUS GLEWS zS X11 xcbS XauS XdmcpS XrandrS XrenderS XextS Xxf86vmS XiS openal vorbis vorbisfile
 
+if _platform == windows AssertLibExists opengl32 glew32 zlibwapi openal32 vorbis vorbisfile
 if _platform == linux AssertLibExists GL X11 openal vorbis vorbisfile
 
 LibraryDirectories [
@@ -59,7 +62,7 @@ LibraryDirectories [
 if _platform == windows LibraryDirectories source/lib/win64/$ModeStr 
 if _platform == linux   LibraryDirectories source/lib/linux/$ModeStr
 
-Defines NSTEAM CURL_STATIC_LIB _CRT_SECURE_NO_WARNINGS
+Defines NSTEAM CURL_STATIC_LIB _CRT_SECURE_NO_WARNINGS _USE_MATH_DEFINES
 
 if release  Defines NDEBUG
 if !release Defines _DEBUG
@@ -67,15 +70,18 @@ if !release Defines _DEBUG
 if _platform == windows Defines WIN_MODE
 if _platform == linux   Defines LIN_MODE
 
-Depends angelscript source/angelscript     | $mode
-Depends as_addons   source/as_addons       | $mode
-Depends glfw        source/glfw            | $mode
-Depends sound       source/sound           | $mode
-Depends util        source/util            | $mode
-Depends os          source/os              | $mode
-Depends network     source/network         | $mode
-Depends ircclient   source/libircclient    | $mode
-Depends png         source/libpng          | $mode
+Depends angelscript source/angelscript  | $mode $compiler
+Depends as_addons   source/as_addons    | $mode $compiler
+Depends os          source/os           | $mode $compiler
+Depends glfw        source/glfw         | $mode $compiler
+Depends sound       source/sound        | $mode $compiler
+Depends png         source/libpng       | $mode $compiler
+Depends util        source/util         | $mode $compiler
+Depends network     source/network      | $mode $compiler
+Depends ircclient   source/libircclient | $mode $compiler
 
 RunAssembly
 
+MaxCompilerErrors 1
+
+if _platform == windows PostBuildCmd copy $(BuildDirectory)\bin\win64 $BuildDirectory

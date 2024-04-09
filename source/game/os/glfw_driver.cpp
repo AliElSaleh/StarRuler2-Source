@@ -234,7 +234,7 @@ public:
 
 #ifdef WIN_MODE
 		HICON hSmallIcon = (HICON) LoadImage ( 0, "sr2.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE | LR_DEFAULTCOLOR );
-		SendMessage ( GetActiveWindow(), WM_SETICON, ICON_SMALL, (long)hSmallIcon );
+		SendMessage ( GetActiveWindow(), WM_SETICON, ICON_SMALL, (long long int)hSmallIcon );
 #endif
 	}
 

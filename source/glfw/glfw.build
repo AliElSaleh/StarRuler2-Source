@@ -11,6 +11,7 @@ if release  BuildDirectory Build/Release
 if !release BuildDirectory Build/Debug
 
 IncludeFlags . include deps
+Includes . include deps
 
 if !client_library          Defines _GLFW_USE_OPENGL
 if client_library == glesv1 Defines _GLFW_USE_GLESV1
@@ -22,9 +23,9 @@ if _platform == windows {
     "Using Win32 for window creation"
     Defines _GLFW_WIN32
  
-    ExcludedSourceFiles cocoa_*.c x11_*.c nsgl_*.c
+    ExcludedSourceFiles cocoa_*.c x11_*.c nsgl_*.c glx_*.c
 
-    if egl ExcludedSourceFiles glx_*.c else ExcludedSourceFiles egl_*.c
+    if egl ExcludedSourceFiles wgl_*.c else ExcludedSourceFiles egl_*.c
     if egl Defines _GLFW_EGL else Defines _GLFW_WGL
 }
 

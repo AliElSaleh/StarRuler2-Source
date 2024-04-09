@@ -1,4 +1,4 @@
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 #include <Windows.h>
 #include <DbgHelp.h>
 #endif
@@ -37,7 +37,7 @@ namespace scripts {
 
 unsigned reportVersion = 2;
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 MINIDUMP_TYPE mdumpType = (MINIDUMP_TYPE)(MiniDumpWithProcessThreadData | MiniDumpWithIndirectlyReferencedMemory);
 
 LONG WINAPI CrashCallback( LPEXCEPTION_POINTERS pException ) {
@@ -873,7 +873,7 @@ int main(int argc, char** argv) {
 	destroyGlobal();
 
 	if(launchPatcher) {
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 		char buffer[1024];
 		sprintf_s(buffer, "start \"Star Ruler 2 Patcher\" patcher.exe \"%s\"", getAbsolutePath(".").c_str());
 		system(buffer);

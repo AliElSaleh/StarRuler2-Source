@@ -19,13 +19,18 @@ void log(const char* format, ...) {
 	time_t t;
 	::time(&t);
 	struct tm tmp;
+	#if WIN_MODE
+	localtime_s(&tmp, &t);
+	#else
 	localtime_r(&t, &tmp);
+	#endif
 	strftime(date, 2048, "%d %b %Y %H:%M:%S", &tmp);
 
 	printf("[%s] %s\n", date, line);
 	fflush(stdout);
 	va_end(ap);
 #endif
+
 }
 
 void Game::write(Message& msg) {

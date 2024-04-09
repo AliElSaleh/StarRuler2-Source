@@ -2,12 +2,12 @@
 #include <cstring>
 #include <sstream>
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 #include <WinSock2.h>
 #include <ws2def.h>
 #include <ws2ipdef.h>
 #include <WS2tcpip.h>
-#elif defined(__GNUC__)
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>

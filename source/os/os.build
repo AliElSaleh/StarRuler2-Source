@@ -8,9 +8,16 @@ SourceDirectory source
 BuildDirectory Build/$Mode
 
 IncludeFlags include ../util/include
+Includes include ../util/include
 
-if _platform == windows ExcludedSourceFiles *_gcc.cpp *_x86.cpp *_linux.cpp
-if _platform == linux ExcludedSourceFiles *_windows.cpp
+#if compiler == g++  ExcludedSourceFiles *_windows.cpp
+#if compiler == cl   ExcludedSourceFiles *_gcc.cpp *_x86.cpp
+
+if _platform == windows ExcludedSourceFiles *_linux.cpp *_gcc.cpp *_x86.cpp
+if _platform == linux   ExcludedSourceFiles *_windows.cpp
+
+if _platform == windows Defines WIN_MODE
+if _platform == linux   Defines LIN_MODE
 
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars

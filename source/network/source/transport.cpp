@@ -1,14 +1,14 @@
 #include <network/transport.h>
 #include <network/init.h>
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 #include <WinSock2.h>
 #include <ws2def.h>
 #include <ws2ipdef.h>
 #include <WS2tcpip.h>
 
 #include <time.h>
-#elif defined(__GNUC__)
+#else
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <netinet/in.h>
@@ -27,7 +27,7 @@
 
 namespace net {
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 static char zero_arg = 0;
 static char true_arg = 1;
 #else
@@ -49,9 +49,9 @@ Transport::Transport(AddressType Type)
 	int ai_family = (type == AT_IPv4) ? AF_INET : AF_INET6;
 	sockfd = socket(ai_family, SOCK_DGRAM, IPPROTO_UDP);
 
-#ifdef __GNUC__
+#ifdef LIN_MODE
 	ioctl(sockfd, FIONBIO, &true_arg);
-#elif defined(_MSC_VER)
+#elif defined(WIN_MODE)
 	if(sockfd == INVALID_SOCKET) {
 		netError("Failed to bind a socket", WSAGetLastError());
 		close();
@@ -83,7 +83,7 @@ Transport::~Transport() {
 void Transport::close() {
 	if(active) {
 		if(sockfd != INVALID_SOCKET) {
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 			closesocket(sockfd);
 #else
 			::close(sockfd);
@@ -111,7 +111,7 @@ void Transport::listen(Address& address, bool rcvBroadcast) {
 
 	if(result != 0) {
 		active = false;
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 		closesocket(sockfd);
 		netError("Error binding to socket", WSAGetLastError());
 #else
@@ -181,7 +181,7 @@ bool Transport::send(Message& msg, Address& address, bool queue) {
 	int bytes = sendto(sockfd, pBytes, byteCount, 0, (sockaddr*)&saddr, len);
 
 	if(bytes == SOCKET_ERROR) {
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 		if(WSAGetLastError() == WSAEWOULDBLOCK) {
 #else
 		if(errno == EAGAIN) {
@@ -194,7 +194,7 @@ bool Transport::send(Message& msg, Address& address, bool queue) {
 			return false;
 		}
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 		netError("Socket write failed", WSAGetLastError());
 #else
 		perror("Error writing to socket");
@@ -239,12 +239,12 @@ bool Transport::broadcast(Message& msg, int port, bool queue) {
 
 			len = sizeof(sockaddr_in6);
 		} break;
-#ifdef _MSC_VER
-		default:
-			__assume(0);
-#elif defined(__GNUC__)
+#ifdef __GNUC__
 		default:
 			__builtin_unreachable();
+#elif defined(_MSC_VER)
+		default:
+			__assume(0);
 #endif
 	}
 
@@ -255,7 +255,7 @@ bool Transport::broadcast(Message& msg, int port, bool queue) {
 	int bytes = sendto(sockfd, pBytes, byteCount, 0, (sockaddr*)&saddr, len);
 
 	if(bytes == SOCKET_ERROR) {
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 		if(WSAGetLastError() == WSAEWOULDBLOCK) {
 #else
 		if(errno == EAGAIN) {
@@ -268,7 +268,7 @@ bool Transport::broadcast(Message& msg, int port, bool queue) {
 			return false;
 		}
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 		netError("Socket write failed", WSAGetLastError());
 #else
 		perror("Error writing to socket");
@@ -288,7 +288,7 @@ bool Transport::receive(Message& msg, Address& adr) {
 	socklen_t len = sizeof(saddr);
 
 	int bytes = recvfrom(sockfd, buffer, USHRT_MAX, 0, (sockaddr*)&saddr, &len);
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 	int error = (bytes == SOCKET_ERROR ? WSAGetLastError() : -1);
 #endif
 
@@ -297,7 +297,7 @@ bool Transport::receive(Message& msg, Address& adr) {
 		adr.from_sockaddr(saddr);
 		return true;
 	}
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 	else if(error == WSAEWOULDBLOCK || error == WSAECONNRESET) {
 #else
 	else if(errno == EAGAIN) {
@@ -307,7 +307,7 @@ bool Transport::receive(Message& msg, Address& adr) {
 	else {
 		close();
 
-#ifdef __GNUC__
+#ifdef LIN_MODE
 		perror("Error reading from socket");
 #else
 		netError("Error reading from socket", WSAGetLastError());

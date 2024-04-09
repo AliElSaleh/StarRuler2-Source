@@ -8,9 +8,10 @@ SourceDirectory source
 BuildDirectory Build/$Mode
 
 IncludeFlags include ../os/include
+Includes include ../os/include
 
-if _platform == windows Defines _WINSOCK_DEPRECATED_NO_WARNINGS
+if _platform == windows Defines WIN_MODE _WINSOCK_DEPRECATED_NO_WARNINGS
+if _platform == linux   Defines LIN_MODE
 
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars
-

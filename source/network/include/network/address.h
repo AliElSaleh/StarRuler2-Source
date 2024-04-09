@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <functional>
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 //Yay more shitty compiler implementation
 //assumptions because windows sucks.
 struct sockaddr;

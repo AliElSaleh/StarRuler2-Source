@@ -1,4 +1,6 @@
-*.obj
+.vscode
+Int/*.obj
+Intermediate/*.obj
 *.o
 *.log
 *.pdb
@@ -14,5 +16,12 @@
 *.sdf
 *.db-shm
 *.db-wal
+*.exe
+*.exp
+*.ilk
+*.lib
+StarRuler2
+StarRuler2.*
 Int/
 source/*/Intermediate/
+source/*/Build/

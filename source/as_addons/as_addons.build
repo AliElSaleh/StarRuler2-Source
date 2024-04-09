@@ -8,7 +8,9 @@ SourceDirectory source
 BuildDirectory Build/$Mode
 
 IncludeFlags include ../angelscript/include
+Includes include ../angelscript/include
+
+Defines $SharedDefines
 
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars
-

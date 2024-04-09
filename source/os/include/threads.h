@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
     #define Threaded(type) __declspec(thread) type
 
 	#define threadcall __stdcall
@@ -30,7 +30,7 @@ void sleep(unsigned int milliseconds);
 //Sleep intended for use as a wait in a non-critical busy loop
 void idle();
 
-#ifndef _MSC_VER
+#ifndef WIN_MODE
 typedef unsigned int threadreturn;
 typedef threadreturn (*threadfunc)(void*);
 #else
@@ -39,7 +39,7 @@ typedef threadreturn threadcall threadfunc(void*);
 #endif
 
 class atomic_int {
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 	volatile long value;
 #else
 	volatile int value;
@@ -83,7 +83,7 @@ void* swap(void** ptr, void* newval);
 void* compare_and_swap(void** ptr, void* oldval, void* newval);
 
 class _threadlocalPointer {
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 	long index;
 #elif defined(__GNUC__)
 	pthread_key_t key;

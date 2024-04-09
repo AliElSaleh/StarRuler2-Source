@@ -1,13 +1,13 @@
 #pragma once
 
-#ifndef LIN_MODE
-#ifdef SND_EXPORT
-#define _export __declspec(dllexport)
+#ifdef WIN_MODE
+	#ifdef SND_EXPORT
+	#define _export __declspec(dllexport)
+	#else
+	#define _export __declspec(dllimport)
+	#endif
 #else
-#define _export __declspec(dllimport)
-#endif
-#else
-#define _export
+	#define _export
 #endif
 
 namespace audio {

@@ -1,7 +1,13 @@
 Assembly png
-Type lib
+Type static_lib
 
-Compiler gcc
+if cl Compiler cl else Compiler gcc
+
+if release  BuildDirectory Build/Release
+if !release BuildDirectory Build/Debug
 
 IncludeFlags .
+Includes .
 
+Libraries zlib
+LibraryDirectories Build/zlib

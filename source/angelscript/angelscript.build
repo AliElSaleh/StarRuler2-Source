@@ -8,6 +8,7 @@ SourceDirectory source
 BuildDirectory Build/$Mode
 
 IncludeFlags include
+Includes include
 
 ExcludedSourceDirectories addons
 ExcludedSourceFiles *_arm_msvc.asm

@@ -1,10 +1,10 @@
 #include <network/server.h>
 
-#ifdef __GNUC__
+#ifdef WIN_MODE
+#include <WS2tcpip.h>
+#else
 #include <netdb.h>
 #include <sys/socket.h>
-#elif defined(_MSC_VER)
-#include <WS2tcpip.h>
 #endif
 
 namespace net {

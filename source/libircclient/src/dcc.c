@@ -224,7 +224,8 @@ static void libirc_dcc_process_descriptors (irc_session_t * ircsession, fd_set *
 		&& FD_ISSET (dcc->sock, in_set) )
 		{
 			socklen_t len = sizeof(dcc->remote_addr);
-			int nsock, err = 0;
+			int err = 0;
+			socket_t nsock = {0};
 
 			// New connection is available; accept it.
 			if ( socket_accept (&dcc->sock, &nsock, (struct sockaddr *) &dcc->remote_addr, &len) )

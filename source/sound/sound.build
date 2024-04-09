@@ -1,5 +1,5 @@
 Assembly sound
-Type static_lib
+Type dynamic_lib
 
 CompilerFlags $SharedCompilerFlags
 LinkerFlags $SharedLinkerFlags
@@ -8,8 +8,15 @@ SourceDirectory source
 BuildDirectory Build/$Mode
 
 IncludeFlags include ogg OpenALSoft vorbis ../os/include
+Includes include ogg OpenALSoft vorbis ../os/include
 
-Defines _CRT_SECURE_NO_WARNINGS
+Defines _CRT_SECURE_NO_WARNINGS SND_EXPORT
+
+Libraries os
+LibraryDirectories ../os/Build/$Mode
+
+if _platform == windows Libraries openal32
+if _platform == windows LibraryDirectories OpenALSoft/libs/Win64
 
 if _platform == windows Defines WIN_MODE
 if _platform == linux   Defines LIN_MODE
@@ -17,5 +24,8 @@ if _platform == linux   Defines LIN_MODE
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars
 
-if _platform == linux AssertLibExists ogg vorbis vorbisfile
+AssertLibExists os
 
+if _platform == linux AssertLibExists ogg vorbis vorbisfile openal
+
+if _platform == windows PostBuildCmd copy Build\$(Mode)\$(Assembly).dll ..\..\Build

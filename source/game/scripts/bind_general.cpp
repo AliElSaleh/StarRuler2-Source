@@ -1,4 +1,4 @@
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 #include <Windows.h>
 #endif
 
@@ -26,7 +26,7 @@
 #include <limits.h>
 #include <limits>
 
-#ifdef __GNUC__
+#ifdef LIN_MODE
 #include <unistd.h>
 #endif
 
@@ -763,7 +763,7 @@ void cloudLegal() {
 	if(devices.cloud) devices.cloud->openURL("http://steamcommunity.com/sharedfiles/workshoplegalagreement");
 }
 
-#ifdef _MSC_VER
+#ifdef WIN_MODE
 threads::threadreturn threadcall openURL(void* arg) {
 	std::string* pStr = (std::string*)arg;
 	ShellExecute(NULL, "open", pStr->c_str(), NULL, NULL, SW_SHOW);
@@ -779,7 +779,7 @@ static void openBrowser(const std::string& url) {
 		devices.cloud->openURL(url);
 		return;
 	}
-#ifdef __GNUC__
+#ifdef LIN_MODE
 	if(fork() == 0) {
 		execlp("xdg-open", "xdg-open", url.c_str(), (char*)nullptr);
 		exit(1);
@@ -792,7 +792,7 @@ static void openBrowser(const std::string& url) {
 static void openFileManager(const std::string& folder) {
 	if(!isDirectory(folder) || !isAccessible(folder))
 		return;
-#ifdef __GNUC__
+#ifdef LIN_MODE
 	if(fork() == 0) {
 		execlp("xdg-open", "xdg-open", folder.c_str(), (char*)nullptr);
 		exit(1);

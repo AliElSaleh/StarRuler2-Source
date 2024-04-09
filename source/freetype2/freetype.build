@@ -10,6 +10,7 @@ SourceDirectory src
 BuildDirectory Build/$Mode
 
 IncludeFlags include
+Includes include
 
 IncludedSourceFiles [
     autofit.c

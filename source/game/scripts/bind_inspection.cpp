@@ -52,7 +52,7 @@ void inspect(asIScriptContext* ctx, const char* name, void* pData, int typeID) {
 		break;
 	case asTYPEID_INT64:
 		asInt = *(asINT64*)pData;
-		sprintf(buffer,"%ld",asInt);
+		sprintf(buffer,"%lld",asInt);
 		value = buffer;
 		break;
 	case asTYPEID_UINT8:
@@ -72,7 +72,7 @@ void inspect(asIScriptContext* ctx, const char* name, void* pData, int typeID) {
 		break;
 	case asTYPEID_UINT64:
 		asInt = *(asINT64*)pData;
-		sprintf(buffer,"%lu",asInt);
+		sprintf(buffer,"%llu",asInt);
 		value = buffer;
 		break;
 	case asTYPEID_FLOAT:

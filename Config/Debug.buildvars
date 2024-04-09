@@ -1,7 +1,7 @@
 if cl Compiler cl else Compiler g++
 
 if compiler == cl {
-    SharedCompilerFlags /std:c++11 /EHa /MDd /Z7
+    SharedCompilerFlags /EHa /MDd /Z7
     SharedLinkerFlags /DEBUG
 }
 
@@ -23,5 +23,6 @@ if compiler == g++ {
     SharedLinkerFlags
 }
 
-if _platform == linux SharedDefines LIN_MODE GLIBCXX_USE_NANOSLEEP
+if _platform == windows SharedDefines WIN_MODE
+if _platform == linux   SharedDefines LIN_MODE GLIBCXX_USE_NANOSLEEP
 

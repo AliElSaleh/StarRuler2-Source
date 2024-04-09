@@ -1,8 +1,8 @@
-#ifdef __GNUC__
+#ifdef WIN_MODE
+#include <WS2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <sys/select.h>
-#elif defined(_MSC_VER)
-#include <WS2tcpip.h>
 #endif
 
 #include <network/message_handler.h>

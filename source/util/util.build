@@ -8,9 +8,9 @@ SourceDirectory source
 BuildDirectory Build/$Mode
 
 IncludeFlags include ../libpng
+Includes include ../libpng
 
-Defines _CRT_SECURE_NO_WARNINGS
+Defines _CRT_SECURE_NO_WARNINGS _USE_MATH_DEFINES
 
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars
-

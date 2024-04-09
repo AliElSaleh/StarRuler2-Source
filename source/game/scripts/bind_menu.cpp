@@ -145,7 +145,7 @@ static unsigned saveVersion(const std::string& fname) {
 static bool saveInfo(const std::string& fname, SaveFileInfo& info) {
 	if(!isAccessible(fname)) {
 		scripts::throwException("Cannot access file outside game or profile directories.");
-		return (unsigned)-1;
+		return false;
 	}
 	return getSaveFileInfo(fname, info);
 }
