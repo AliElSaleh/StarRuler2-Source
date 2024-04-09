@@ -1,0 +1,7 @@
+Assembly png
+Type lib
+
+Compiler gcc
+
+IncludeFlags .
+

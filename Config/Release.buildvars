@@ -1,0 +1,26 @@
+if cl Compiler cl else Compiler g++
+
+if compiler == cl {
+    SharedCompilerFlags /std:c++11 /EHa /MD
+    SharedLinkerFlags
+}
+
+if compiler == g++ {
+    SharedCompilerFlags [
+        -std=c++11
+        -O3
+        -Wall
+        -Wno-invalid-offsetof
+        -Wno-switch
+        -Wno-reorder
+        -Wno-unused-local-typedefs
+        -Wuninitialized
+        -Wmaybe-uninitialized
+        -Werror=return-type
+    ]
+    
+    SharedLinkerFlags
+}
+
+if _platform == linux SharedDefines LIN_MODE GLIBCXX_USE_NANOSLEEP
+

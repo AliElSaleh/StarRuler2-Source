@@ -1,0 +1,4 @@
+if release Mode Release else Mode Debug
+
+if _platform == windows Defines WIN32 _WIN32 _WINSOCK_DEPRECATED_NO_WARNINGS _MBCS
+
