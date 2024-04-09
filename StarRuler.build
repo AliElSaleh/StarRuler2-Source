@@ -59,8 +59,8 @@ LibraryDirectories [
     source/libpng/Build/$Mode
 ]
 
-if _platform == windows LibraryDirectories source/lib/win64/$ModeStr 
-if _platform == linux   LibraryDirectories source/lib/linux/$ModeStr
+if _platform == windows LibraryDirectories source/lib/win64
+if _platform == linux   LibraryDirectories source/lib/linux
 
 Defines NSTEAM CURL_STATIC_LIB _CRT_SECURE_NO_WARNINGS _USE_MATH_DEFINES
 
