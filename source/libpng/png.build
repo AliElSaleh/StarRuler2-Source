@@ -10,4 +10,4 @@ IncludeFlags .
 Includes .
 
 Libraries zlib
-LibraryDirectories Build/zlib
+LibraryDirectories zlib
