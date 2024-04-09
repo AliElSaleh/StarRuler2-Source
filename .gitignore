@@ -19,7 +19,6 @@ Intermediate/*.obj
 *.exe
 *.exp
 *.ilk
-*.lib
 StarRuler2
 StarRuler2.*
 Int/
