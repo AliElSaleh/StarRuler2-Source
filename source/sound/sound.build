@@ -1,13 +1,21 @@
-Assembly sound64d
-Extension lib
+Assembly sound
+Type static_lib
 
-Compiler cl
 CompilerFlags $SharedCompilerFlags
 LinkerFlags $SharedLinkerFlags
 
 SourceDirectory source
-Includes include ogg OpenALSoft vorbis ../os/include
+BuildDirectory Build/$Mode
+
+IncludeFlags include ogg OpenALSoft vorbis ../os/include
 
 Defines _CRT_SECURE_NO_WARNINGS
 
-include ../../Config/Debug.buildvariables
+if _platform == windows Defines WIN_MODE
+if _platform == linux   Defines LIN_MODE
+
+include ../../Config/Common.buildvars
+include ../../Config/$(Mode).buildvars
+
+if _platform == linux AssertLibExists ogg vorbis vorbisfile
+

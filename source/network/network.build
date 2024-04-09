@@ -1,13 +1,16 @@
-Assembly network64d
-Extension lib
+Assembly network
+Type static_lib
 
-Compiler cl
 CompilerFlags $SharedCompilerFlags
 LinkerFlags $SharedLinkerFlags
 
 SourceDirectory source
-Includes include ../os/include
+BuildDirectory Build/$Mode
 
-Defines _WINSOCK_DEPRECATED_NO_WARNINGS
+IncludeFlags include ../os/include
 
-include ../../Config/Debug.buildvariables
+if _platform == windows Defines _WINSOCK_DEPRECATED_NO_WARNINGS
+
+include ../../Config/Common.buildvars
+include ../../Config/$(Mode).buildvars
+

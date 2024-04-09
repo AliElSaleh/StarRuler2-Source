@@ -1,17 +1,17 @@
-Assembly os64d
-Extension lib
+Assembly os
+Type static_lib
 
-Compiler cl
 CompilerFlags $SharedCompilerFlags
 LinkerFlags $SharedLinkerFlags
 
 SourceDirectory source
-Includes include ../util/include
+BuildDirectory Build/$Mode
 
-ExcludedSourceFiles *_gcc.cpp *_x86.cpp
+IncludeFlags include ../util/include
 
-if _platform == windows ExcludedSourceFiles *_linux.cpp
+if _platform == windows ExcludedSourceFiles *_gcc.cpp *_x86.cpp *_linux.cpp
 if _platform == linux ExcludedSourceFiles *_windows.cpp
 
-include ../../Config/Debug.buildvariables
+include ../../Config/Common.buildvars
+include ../../Config/$(Mode).buildvars
 

@@ -1,14 +1,18 @@
-Assembly angelscript64d
-Extension lib
+Assembly angelscript
+Type static_lib
 
-Compiler cl
 CompilerFlags $SharedCompilerFlags
 LinkerFlags $SharedLinkerFlags
 
 SourceDirectory source
-Includes include
+BuildDirectory Build/$Mode
+
+IncludeFlags include
 
 ExcludedSourceDirectories addons
-ExcludedSourceFiles *_arm_msvc.asm *_xenon.cpp *_gcc.cpp *_mingw.cpp *_arm.cpp
+ExcludedSourceFiles *_arm_msvc.asm
+if platform == windows ExcludedSourceFiles *_xenon.cpp *_gcc.cpp *_mingw.cpp *_arm.cpp
+if compiler == linux   ExcludedSourceFiles *_xenon.cpp *_mingw.cpp *_arm.cpp
 
-include ../../Config/Debug.buildvariables
+include ../../Config/Common.buildvars
+include ../../Config/$(Mode).buildvars

@@ -1,18 +1,74 @@
-Assembly glfw64
-Extension lib
+Assembly glfw
+Type static_lib
 
-Compiler cl
+if cl Compiler cl else Compiler gcc
+
 CompilerFlags $SharedCompilerFlags
-LinkerFlags $SharedLinkerFlags
+LinkerFlags   $SharedLinkerFlags
 
 SourceDirectory src
-Includes . include deps
+if release  BuildDirectory Build/Release
+if !release BuildDirectory Build/Debug
 
-ExcludedSourceFiles cocoa_*.c egl_*.c glx_*.c
+IncludeFlags . include deps
 
-if _platform == windows ExcludedSourceFiles x11_*.c
-if _platform == linux ExcludedSourceFiles win32_*.c
+if !client_library          Defines _GLFW_USE_OPENGL
+if client_library == glesv1 Defines _GLFW_USE_GLESV1
+if client_library == glesv2 Defines _GLFW_USE_GLESV2
 
-Defines _CRT_SECURE_NO_WARNINGS
+Defines _CRT_SECURE_NO_WARNINGS _GLFW_VERSION_FULL=\"3.0.1\"
 
-include ../../Config/Debug.buildvariables
+if _platform == windows {
+    "Using Win32 for window creation"
+    Defines _GLFW_WIN32
+ 
+    ExcludedSourceFiles cocoa_*.c x11_*.c nsgl_*.c
+
+    if egl ExcludedSourceFiles glx_*.c else ExcludedSourceFiles egl_*.c
+    if egl Defines _GLFW_EGL else Defines _GLFW_WGL
+}
+
+if _platform == linux {
+    "Using X11 for window creation"
+    Defines _GLFW_X11
+
+    if egl ExcludedSourceFiles glx_*.c else ExcludedSourceFiles egl_*.c
+    if egl Defines _GLFW_EGL else Defines _GLFW_GLX _GLFW_HAS_GLXGETPROCADDRESS
+    
+    ExcludedSourceFiles cocoa_*.c win32_*.c wgl_*.c nsgl_*.c
+}
+
+if _platform == apple {
+    "Using NSGL"
+    "Using Cocoa for window creation"
+    Defines _GLFW_COCOA _GLFW_NSGL
+    
+    ExcludedSourceFiles wgl_*.c win32_*.c glx_*.c egl_*.c
+ 
+    if menubar Defines _GLFW_USE_MENUBAR
+    if chdir   Defines _GLFW_USE_CHDIR
+}
+
+if compiler == cl {
+    if !release SharedCompilerFlags /EHa /MDd /Z7
+    if release  SharedCompilerFlags /EHa /MD
+    SharedLinkerFlags /DEBUG
+}
+
+if compiler == gcc {
+    if !release SharedCompilerFlags -O0 -g
+    if release  SharedCompilerFlags -O3
+    SharedLinkerFlags
+}
+
+if shared         Defines _GLFW_BUILD_DLL
+if no_dload_winmm Defines _GLFW_NO_DLOAD_WINMM
+
+# TODO _GLFW_HAS_GLXGETPROCADDRESSARB
+# TODO _GLFW_HAS_GLXGETPROCADDRESSEXT
+# TODO _GLFW_HAS_DLOPEN
+
+# libxxf86vm-dev
+# libxi-dev 
+# libxrandr-dev
+

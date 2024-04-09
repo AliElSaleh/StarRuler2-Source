@@ -6,11 +6,7 @@
 #include "str_util.h"
 #include "vec2.h"
 
-#ifdef _MSC_VER
 #include <ft2build.h>
-#else
-#include <freetype2/ft2build.h>
-#endif
 
 #include FT_FREETYPE_H
 #include FT_SIZES_H

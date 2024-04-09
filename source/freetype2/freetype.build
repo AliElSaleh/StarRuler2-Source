@@ -1,12 +1,15 @@
-Assembly freetype247_64
-Extension lib
+Assembly freetype
+Type static_lib
 
-Compiler clang
+Compiler gcc
 
-CompilerFlags -O2
+if release  CompilerFlags -O2
+if !release CompilerFlags -O0
 
 SourceDirectory src
-Includes include
+BuildDirectory Build/$Mode
+
+IncludeFlags include
 
 IncludedSourceFiles [
     autofit.c
@@ -27,17 +30,9 @@ IncludedSourceFiles [
     smooth.c
 ]
 
-if _platform == windows Defines WIN32
+if _platform == windows Defines WIN32 _MBCS
 
-Defines [
-    FT2_BUILD_LIBRARY 
-    _DEBUG
-    _LIB
-    _CRT_SECURE_NO_WARNINGS
-    FT_DEBUG_LEVEL_ERROR
-    FT_DEBUG_LEVEL_TRACE
-    FT2_BUILD_LIBRARY
-    _MBCS
-]
+if !release Defines _DEBUG FT_DEBUG_LEVEL_TRACE FT_DEBUG_LEVEL_ERROR
 
-Multithread false
+Defines FT2_BUILD_LIBRARY _LIB _CRT_SECURE_NO_WARNINGS
+

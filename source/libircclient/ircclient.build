@@ -1,17 +1,18 @@
-Assembly libircclient64d
-Extension lib
+Assembly ircclient
+Type static_lib
 
-Compiler cl
 CompilerFlags $SharedCompilerFlags
 LinkerFlags $SharedLinkerFlags
 
 SourceDirectory src
-Includes include
+BuildDirectory Build/$Mode
+
+IncludeFlags include
 
 IncludedSourceFiles libircclient.c
 
-Defines _CRT_SECURE_NO_WARNINGS ENABLE_THREADS _WINSOCK_DEPRECATED_NO_WARNINGS
+Defines _CRT_SECURE_NO_WARNINGS ENABLE_THREADS
 
-if _platform == windows Defines WIN32 _WIN32
+include ../../Config/Common.buildvars
+include ../../Config/$(Mode).buildvars
 
-include ../../Config/Debug.buildvariables

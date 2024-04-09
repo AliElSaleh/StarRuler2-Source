@@ -1,11 +1,11 @@
-include Config/Debug.buildvariables
+include Config/Common.buildvars
+include Config/$(Mode).buildvars
 
 Assembly StarRuler2
 
-Compiler cl
-
 CompilerFlags $SharedCompilerFlags
-LinkerFlags $SharedLinkerFlags /NODEFAULTLIB:LIBCMT
+LinkerFlags   $SharedLinkerFlags
+if compiler == cl LinkerFlags /NODEFAULTLIB:LIBCMT
 
 SourceDirectory source/game
 IntermediateDirectory Int
@@ -19,7 +19,7 @@ CompanyName Blind Mind Studios
 
 Icon sr2.ico
 
-Includes [
+IncludeFlags [
     source/game 
     source/include 
     source/angelscript/include 
@@ -37,49 +37,45 @@ Includes [
     source/steam
 ]
 
-Libraries [
-    zlibwapi
-    opengl32
-    glew32
-    libpng64
-    glfw64
-    glu32
-    freetype247_64
-    angelscript64d
-    as_addons64d
-    sound64d
-    util64d
-    os64d
-    network64d
-    libcurl
-    libircclient64d
-    %_NativeLibs
-]
+Libraries %_NativeLibs angelscript as_addons sound util os network curl freetype ircclient glfw pngS
+
+if _platform == windows Libraries opengl32 glu32 glew32 zlibwapi
+if _platform == linux   Libraries GL GLUS GLEWS zS X11 xcbS XauS XdmcpS XrandrS XrenderS XextS Xxf86vmS XiS openal vorbis vorbisfile
+
+if _platform == linux AssertLibExists GL X11 openal vorbis vorbisfile
 
 LibraryDirectories [
-    source/lib/win64 
-    source/angelscript/Build 
-    source/as_addons/Build
-    source/glfw/Build
-    source/sound/Build
-    source/util/Build
-    source/os/Build
-    source/network/Build
-    source/libircclient/Build
+    source/angelscript/Build/$Mode
+    source/as_addons/Build/$Mode
+    source/glfw/Build/$Mode
+    source/sound/Build/$Mode
+    source/util/Build/$Mode
+    source/os/Build/$Mode
+    source/network/Build/$Mode
+    source/libircclient/Build/$Mode
+    source/libpng/Build/$Mode
 ]
 
-Defines NSTEAM _DEBUG CURL_STATICLIB _MBCS _CRT_SECURE_NO_WARNINGS
+if _platform == windows LibraryDirectories source/lib/win64/$ModeStr 
+if _platform == linux   LibraryDirectories source/lib/linux/$ModeStr
 
-if _platform == windows Defines WIN_MODE WIN32
+Defines NSTEAM CURL_STATIC_LIB _CRT_SECURE_NO_WARNINGS
+
+if release  Defines NDEBUG
+if !release Defines _DEBUG
+
+if _platform == windows Defines WIN_MODE
 if _platform == linux   Defines LIN_MODE
 
-Depends angelscript source/angelscript
-Depends as_addons   source/as_addons
-Depends glfw        source/glfw
-Depends sound       source/sound
-Depends util        source/util
-Depends os          source/os
-Depends network     source/network
-Depends ircclient   source/libircclient
+Depends angelscript source/angelscript     | $mode
+Depends as_addons   source/as_addons       | $mode
+Depends glfw        source/glfw            | $mode
+Depends sound       source/sound           | $mode
+Depends util        source/util            | $mode
+Depends os          source/os              | $mode
+Depends network     source/network         | $mode
+Depends ircclient   source/libircclient    | $mode
+Depends png         source/libpng          | $mode
 
-#RunAssembly
+RunAssembly
+
