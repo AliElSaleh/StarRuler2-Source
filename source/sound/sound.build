@@ -15,7 +15,7 @@ Defines _CRT_SECURE_NO_WARNINGS SND_EXPORT
 Libraries os
 LibraryDirectories ../os/Build/$Mode
 
-if _platform == windows Libraries openal32
+if _platform == windows Libraries openal64
 if _platform == windows LibraryDirectories OpenALSoft/libs/Win64
 
 if _platform == windows Defines WIN_MODE
