@@ -1,5 +1,5 @@
 Assembly glfw
-Type static_lib
+if shared Type dynamic_lib else Type static_lib
 
 if cl Compiler cl else Compiler gcc
 
@@ -7,8 +7,8 @@ CompilerFlags $SharedCompilerFlags
 LinkerFlags   $SharedLinkerFlags
 
 SourceDirectory src
-if release  BuildDirectory Build/Release
-if !release BuildDirectory Build/Debug
+if release  BuildDirectory Build/Release/%%Shared
+if !release BuildDirectory Build/Debug/%%Shared
 
 IncludedSourceFiles clipboard.c context.c gamma.c joystick.c init.c input.c monitor.c window.c
 
@@ -28,6 +28,8 @@ if _platform == windows {
 
     if egl IncludedSourceFiles egl_*.c else IncludedSourceFiles wgl_*.c
     if egl Defines _GLFW_EGL else Defines _GLFW_WGL
+
+    if shared Libraries kernel32 user32 opengl32 gdi32
 }
 
 if _platform == linux {
@@ -51,6 +53,8 @@ if _platform == apple {
  
     if menubar Defines _GLFW_USE_MENUBAR
     if chdir   Defines _GLFW_USE_CHDIR
+
+    if shared LinkerFlags -ObjC -framework Foundation -framework QuartzCore -framework AppKit -framework OpenGL
 }
 
 if compiler == cl {
@@ -65,8 +69,8 @@ if compiler == gcc {
     SharedLinkerFlags
 }
 
-if shared         Defines _GLFW_BUILD_DLL
-if no_dload_winmm Defines _GLFW_NO_DLOAD_WINMM
+if _platform == windows if shared         Defines _GLFW_BUILD_DLL
+if _platform == windows if no_dload_winmm Defines _GLFW_NO_DLOAD_WINMM
 
 # TODO _GLFW_HAS_GLXGETPROCADDRESSARB
 # TODO _GLFW_HAS_GLXGETPROCADDRESSEXT
