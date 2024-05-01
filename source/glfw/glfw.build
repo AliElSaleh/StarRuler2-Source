@@ -10,7 +10,8 @@ SourceDirectory src
 if release  BuildDirectory Build/Release
 if !release BuildDirectory Build/Debug
 
-IncludeFlags . include deps
+IncludedSourceFiles context.c init.c input.c monitor.c window.c
+
 Includes . include deps
 
 if !client_library          Defines _GLFW_USE_OPENGL
@@ -23,9 +24,9 @@ if _platform == windows {
     "Using Win32 for window creation"
     Defines _GLFW_WIN32
  
-    ExcludedSourceFiles cocoa_*.c x11_*.c nsgl_*.c glx_*.c
+    IncludedSourceFiles w32_*.c winmm_*.c
 
-    if egl ExcludedSourceFiles wgl_*.c else ExcludedSourceFiles egl_*.c
+    if egl IncludedSourceFiles egl_*.c else IncludedSourceFiles wgl_*.c
     if egl Defines _GLFW_EGL else Defines _GLFW_WGL
 }
 
@@ -33,18 +34,20 @@ if _platform == linux {
     "Using X11 for window creation"
     Defines _GLFW_X11
 
-    if egl ExcludedSourceFiles glx_*.c else ExcludedSourceFiles egl_*.c
-    if egl Defines _GLFW_EGL else Defines _GLFW_GLX _GLFW_HAS_GLXGETPROCADDRESS
+    IncludedSourceFiles x11_*.c linux_*.c posix_*.c xkb_*.c
     
-    ExcludedSourceFiles cocoa_*.c win32_*.c wgl_*.c nsgl_*.c
+    if egl IncludedSourceFiles egl_*.c else IncludedSourceFiles glx_*.c
+    if egl Defines _GLFW_EGL else Defines _GLFW_GLX _GLFW_HAS_GLXGETPROCADDRESS
 }
 
 if _platform == apple {
     "Using NSGL"
     "Using Cocoa for window creation"
     Defines _GLFW_COCOA _GLFW_NSGL
-    
-    ExcludedSourceFiles wgl_*.c win32_*.c glx_*.c egl_*.c
+
+    IncludedSourceFiles cocoa_*.m iokit_*.m mach_time.c posix_tls.c
+
+    Defines GL_SILENCE_DEPRECATION
  
     if menubar Defines _GLFW_USE_MENUBAR
     if chdir   Defines _GLFW_USE_CHDIR
@@ -68,8 +71,3 @@ if no_dload_winmm Defines _GLFW_NO_DLOAD_WINMM
 # TODO _GLFW_HAS_GLXGETPROCADDRESSARB
 # TODO _GLFW_HAS_GLXGETPROCADDRESSEXT
 # TODO _GLFW_HAS_DLOPEN
-
-# libxxf86vm-dev
-# libxi-dev 
-# libxrandr-dev
-
