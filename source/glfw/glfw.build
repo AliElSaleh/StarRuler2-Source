@@ -24,7 +24,7 @@ if _platform == windows {
     "Using Win32 for window creation"
     Defines _GLFW_WIN32
  
-    IncludedSourceFiles w32_*.c winmm_*.c
+    IncludedSourceFiles win32_*.c winmm_*.c
 
     if egl IncludedSourceFiles egl_*.c else IncludedSourceFiles wgl_*.c
     if egl Defines _GLFW_EGL else Defines _GLFW_WGL
