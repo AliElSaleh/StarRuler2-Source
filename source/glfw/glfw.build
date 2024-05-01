@@ -10,7 +10,7 @@ SourceDirectory src
 if release  BuildDirectory Build/Release
 if !release BuildDirectory Build/Debug
 
-IncludedSourceFiles context.c init.c input.c monitor.c window.c
+IncludedSourceFiles clipboard.c context.c gamma.c joystick.c init.c input.c monitor.c window.c
 
 Includes . include deps
 
