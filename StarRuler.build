@@ -82,4 +82,4 @@ RunAssembly
 MaxCompilerErrors 1
 
 if _platform == windows PostBuildCmd copy $(BuildDirectory)\bin\win64 $BuildDirectory
-if _platform == linux   PostBuildCmd cp Build/bin/linux Build
+if _platform == linux   PostBuildCmd cp -R Build/bin/linux Build
