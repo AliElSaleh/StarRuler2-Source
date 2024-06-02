@@ -44,9 +44,6 @@ Libraries %_NativeLibs angelscript as_addons sound util os network curl freetype
 if _platform == windows Libraries opengl32 glu32 glew32 zlibwapi
 if _platform == linux   Libraries GL GLUS GLEWS zS X11 xcbS XauS XdmcpS XrandrS XrenderS XextS Xxf86vmS XiS openal vorbis vorbisfile
 
-if _platform == windows AssertLibExists opengl32 glew32 zlibwapi openal32 vorbis vorbisfile
-if _platform == linux AssertLibExists GL X11 openal vorbis vorbisfile
-
 LibraryDirectories [
     source/angelscript/Build/$Mode
     source/as_addons/Build/$Mode
