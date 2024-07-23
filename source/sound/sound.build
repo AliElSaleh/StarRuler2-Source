@@ -7,7 +7,7 @@ LinkerFlags $SharedLinkerFlags
 SourceDirectory source
 BuildDirectory Build/$Mode
 
-Includes include ogg OpenALSoft vorbis ../os/include
+Includes . include ogg OpenALSoft vorbis ../os/include
 
 Defines _CRT_SECURE_NO_WARNINGS SND_EXPORT
 
