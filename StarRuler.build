@@ -28,6 +28,7 @@ IncludeFlags [
     source/sound/include
     source/include/glew
     source/glfw/include
+    source/glfw/deps
     source/libpng
     source/freetype2/include
     source/as_addons/include
