@@ -11,9 +11,10 @@ IncludeFlags include
 Includes include
 
 ExcludedSourceDirectories addons
-ExcludedSourceFiles *_arm_msvc.asm
-if platform == windows ExcludedSourceFiles *_xenon.cpp *_gcc.cpp *_mingw.cpp *_arm.cpp
-if compiler == linux   ExcludedSourceFiles *_xenon.cpp *_mingw.cpp *_arm.cpp
+if !arm ExcludedSourceFiles *.asm *.S *.s *_arm.cpp
+
+if windows ExcludedSourceFiles *_xenon.cpp *_gcc.cpp *_mingw.cpp
+if linux   ExcludedSourceFiles *_xenon.cpp *_mingw.cpp
 
 include ../../Config/Common.buildvars
 include ../../Config/$(Mode).buildvars

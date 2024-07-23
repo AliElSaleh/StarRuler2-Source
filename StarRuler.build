@@ -12,13 +12,11 @@ IntermediateDirectory Int
 
 ExcludedSourceFiles master_server.cpp
 
-if compiler != g++ {
-    TitleName Star Ruler 2
-    Description Star Ruler 2 (Open Source)
-    Version 1.0.0
-    CompanyName Blind Mind Studios
-    Icon sr2.ico
-}
+TitleName Star Ruler 2
+Description Star Ruler 2 (Open Source)
+Version 1.0.0
+CompanyName Blind Mind Studios
+Icon sr2
 
 IncludeFlags [
     source/game 
@@ -81,5 +79,5 @@ RunAssembly
 
 MaxCompilerErrors 1
 
-if _platform == windows PostBuildCmd copy $(BuildDirectory)\bin\win64 $BuildDirectory
-if _platform == linux   PostBuildCmd cp -R Build/bin/linux Build
+if windows PostBuildCmd copy $(BuildDirectory)\bin\win64 $BuildDirectory
+if linux   PostBuildCmd cp -R Build/bin/linux Build
