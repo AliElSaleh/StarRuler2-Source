@@ -18,7 +18,7 @@ Version 1.0.0
 CompanyName Blind Mind Studios
 Icon sr2
 
-IncludeFlags [
+Includes [
     source/game 
     source/include 
     source/angelscript/include 
@@ -36,12 +36,11 @@ IncludeFlags [
     source/libircclient/include
     source/steam
 ]
-Includes $IncludeFlags
 
 Libraries %_NativeLibs angelscript as_addons sound util os network curl freetype ircclient glfw png
 
-if _platform == windows Libraries opengl32 glu32 glew32 zlibwapi
-if _platform == linux   Libraries GL GLUS GLEWS zS X11 xcbS XauS XdmcpS XrandrS XrenderS XextS Xxf86vmS XiS openal vorbis vorbisfile
+if windows Libraries opengl32 glu32 glew32 zlibwapi
+if linux   Libraries GL GLUS GLEWS zS X11 xcbS XauS XdmcpS XrandrS XrenderS XextS Xxf86vmS XiS openal vorbis vorbisfile
 
 LibraryDirectories [
     source/angelscript/Build/$Mode
@@ -55,16 +54,16 @@ LibraryDirectories [
     source/libpng/Build/$Mode
 ]
 
-if _platform == windows LibraryDirectories source/lib/win64
-if _platform == linux   LibraryDirectories source/lib/linux
+if windows LibraryDirectories source/lib/win64
+if linux   LibraryDirectories source/lib/linux
 
 Defines NSTEAM CURL_STATIC_LIB _CRT_SECURE_NO_WARNINGS _USE_MATH_DEFINES
 
 if release  Defines NDEBUG
 if !release Defines _DEBUG
 
-if _platform == windows Defines WIN_MODE
-if _platform == linux   Defines LIN_MODE
+if windows  Defines WIN_MODE
+if linux    Defines LIN_MODE
 
 Depends angelscript source/angelscript  | $mode $compiler
 Depends as_addons   source/as_addons    | $mode $compiler
@@ -78,7 +77,7 @@ Depends ircclient   source/libircclient | $mode $compiler
 
 RunAssembly
 
-MaxCompilerErrors 1
-
 if windows PostBuildCmd copy $(BuildDirectory)\bin\win64 $BuildDirectory
 if linux   PostBuildCmd cp -R Build/bin/linux Build
+
+AssertPlatform Windows Linux
